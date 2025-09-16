@@ -65,9 +65,7 @@ const OrderTracking = ({ orders, setOrders }) => {
                 <strong>Items:</strong>{" "}
                 {(order.items || []).map((i) => i.title || i.name || i).join(", ")}
               </p>
-              <p>
-                <strong>Total:</strong> ₹{order.total}
-              </p>
+              
               <p>
                 <strong>Status:</strong> {order.status}
               </p>
