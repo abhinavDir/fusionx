@@ -7,6 +7,9 @@ const PREDEFINED_QA = [
   
   // Pizzaconst PREDEFINED_QA = [
   /* =========================
+     1. Greetings & Small Talk
+  ========================== */
+
   /* =========================
    11. Breakfast Items
 ========================== */
@@ -119,8 +122,6 @@ const PREDEFINED_QA = [
 { questions: ["future of ai"], answer: "🚀 AI will make canteen smarter and faster." },
 { questions: ["are you funny"], answer: "😂 I try! Want another food joke?" }
 
-     1. Greetings & Small Talk
-  ========================== */
   { questions: ["hi", "hey", "hello"], answer: "👋 Hello! Welcome to FusionX Canteen. How can I help you?" },
   { questions: ["good morning"], answer: "🌞 Good morning! Ready for a delicious breakfast?" },
   { questions: ["good afternoon"], answer: "☀️ Good afternoon! What’s your lunch plan?" },
