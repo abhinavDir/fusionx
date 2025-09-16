@@ -1,33 +1,37 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import "./OrderTracking.css";
 
-const stages = ["Order Waiting", "Preparing", "Out for Delivery", "Delivered"];
+const stages = ["Order Received", "Preparing", "Out for Delivery", "Delivered"];
 
 const OrderTracking = ({ orders, setOrders }) => {
-  const [userOrders, setUserOrders] = useState([]);
+  // Try multiple places for the logged-in user (signup/login flows)
+  const storedUser =
+    JSON.parse(localStorage.getItem("currentUser")) || // preferred
+    JSON.parse(localStorage.getItem("userSignup")) ||  // fallback
+    null;
 
-  useEffect(() => {
-    const storedOrders = JSON.parse(localStorage.getItem("orders")) || [];
-    if (storedOrders.length > 0) {
-      setOrders(storedOrders);
-    }
-  }, []);
+  // canonical id to compare with order.userId or order.mobile
+  const userId = storedUser?.uid || storedUser?.mobile || storedUser?.email || null;
+  const userMobile = storedUser?.mobile || null;
 
-  useEffect(() => {
-    const activeOrders = orders
-      .filter((o) => o.status !== "Rejected" && o.status !== "Cancelled")
-      .sort((a, b) => b.id.localeCompare(a.id));
+  // Filter orders so the user only sees their own orders
+  const userOrders = userId
+    ? (orders || []).filter(
+        (o) =>
+          // match by explicit stored userId OR fallback to mobile
+          (o.userId && String(o.userId) === String(userId)) ||
+          (o.mobile && String(o.mobile) === String(userMobile))
+      )
+    : [];
 
-    setUserOrders(activeOrders);
-  }, [orders]);
-
+  // Cancel order (only if not delivered yet) — updates react state only;
+  // if you want to persist to Firestore updateDoc instead.
   const handleCancel = (id) => {
     if (window.confirm("Are you sure you want to cancel this order?")) {
-      const updated = orders.map((o) =>
+      const updated = (orders || []).map((o) =>
         o.id === id ? { ...o, status: "Cancelled" } : o
       );
       setOrders(updated);
-      localStorage.setItem("orders", JSON.stringify(updated));
     }
   };
 
@@ -59,7 +63,13 @@ const OrderTracking = ({ orders, setOrders }) => {
               <h3>Order #{order.id}</h3>
               <p>
                 <strong>Items:</strong>{" "}
-                {order.items.map((i) => i.title || i).join(", ")}
+                {(order.items || []).map((i) => i.title || i.name || i).join(", ")}
+              </p>
+              <p>
+                <strong>Total:</strong> ₹{order.total}
+              </p>
+              <p>
+                <strong>Status:</strong> {order.status}
               </p>
 
               <button
@@ -74,9 +84,7 @@ const OrderTracking = ({ orders, setOrders }) => {
                 {stages.map((stage, index) => (
                   <div key={index} className="stage">
                     <div
-                      className={`circle ${
-                        index <= currentStageIndex ? "active" : ""
-                      }`}
+                      className={`circle ${index <= currentStageIndex ? "active" : ""}`}
                     >
                       {index + 1}
                     </div>
@@ -84,11 +92,7 @@ const OrderTracking = ({ orders, setOrders }) => {
                       {stage}
                     </p>
                     {index < stages.length - 1 && (
-                      <div
-                        className={`line ${
-                          index < currentStageIndex ? "active" : ""
-                        }`}
-                      ></div>
+                      <div className={`line ${index < currentStageIndex ? "active" : ""}`}></div>
                     )}
                   </div>
                 ))}

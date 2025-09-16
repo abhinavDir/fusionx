@@ -13,8 +13,8 @@ function Login({ setUser }) {
 
     if (!savedUser) return alert("No account found. Please sign up first!");
     if (name === savedUser.name && mobile === savedUser.mobile) {
-      setUser(savedUser);
-      navigate("/home96*5805"); // redirect to user page
+      setUser(savedUser); // savedUser now has uid
+      navigate("/home"); // redirect to user page
     } else {
       alert("Invalid Name or Mobile!");
     }

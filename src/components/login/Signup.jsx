@@ -12,8 +12,11 @@ function Signup() {
     e.preventDefault();
     if (!name || !mobile || !email) return alert("Fill all fields!");
 
+    // Generate unique UID for user
+    const uid = Date.now() + "-" + Math.floor(Math.random() * 1000);
+
     // Save user data to localStorage
-    const userData = { name, mobile, email };
+    const userData = { uid, name, mobile, email };
     localStorage.setItem("userSignup", JSON.stringify(userData));
 
     alert("✅ Signed Up Successfully! Please login now.");

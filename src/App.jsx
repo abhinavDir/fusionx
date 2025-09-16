@@ -38,6 +38,7 @@ import AIChatPage from "./components/aichat/Aichat";
 
 import { collection, onSnapshot, addDoc } from "firebase/firestore";
 import { db } from "./firebase";
+import AiSlider from "./components/aisslider/aipage";
 
 // ---------------------------
 // Landing Modal
@@ -166,7 +167,7 @@ function App() {
         mobile,
         status: "Order Received",
         assignedTo: null,
-        userId: user?.uid || null, // <-- USER ID STORED
+        userId: user.uid, // <-- only current user
         createdAt: Date.now(),
       });
 
@@ -216,6 +217,7 @@ function App() {
                 <Offer2/>
                 <WeekendFood/>
                 <Announcement/>
+                <AiSlider/>
               </section>
               {showFooter && <Footer />}
             </ProtectedUserRoute>

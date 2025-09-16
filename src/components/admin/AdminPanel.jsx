@@ -18,7 +18,6 @@ const AdminPanel = () => {
         return { id: doc.id, ...data, items };
       });
 
-      // Sort latest orders first
       allOrders.sort((a, b) => b.createdAt - a.createdAt);
       setOrders(allOrders);
     });
@@ -26,48 +25,54 @@ const AdminPanel = () => {
     return () => unsubscribe();
   }, []);
 
-  // 🔔 Notifications for new unassigned orders
+  // 🔔 Notifications = only unassigned orders
   useEffect(() => {
-    const newOrders = orders.filter(
-      (o) => o.status === "Order Received" && !o.assignedTo && !notifications.find(n => n.id === o.id)
+    const unassignedOrders = orders.filter(
+      (o) => o.status === "Order Received" && !o.assignedTo
     );
-    if (newOrders.length > 0) {
-      setNotifications((prev) => [...prev, ...newOrders]);
-      const audio = new Audio("/notify.mp3");
-      audio.play().catch(() => console.log("Sound blocked until user interaction"));
-    }
-  }, [orders, notifications]);
+    setNotifications(unassignedOrders);
 
-  // ✅ Update order status in Firestore
+    if (unassignedOrders.length > notifications.length) {
+      const audio = new Audio("/notify.mp3");
+      audio.play().catch(() =>
+        console.log("Sound blocked until user interaction")
+      );
+    }
+  }, [orders]);
+
+  // ✅ Update order status
   const updateOrderStatus = async (id, status) => {
     const orderRef = doc(db, "orders", id);
-    await updateDoc(orderRef, {
-      status,
-      assignedTo: adminName,
-    });
-
-    // Remove notification if exists
-    setNotifications((prev) => prev.filter((n) => n.id !== id));
+    await updateDoc(orderRef, { status, assignedTo: adminName });
   };
 
-  // Handler shortcuts
   const handleAccept = (id) => updateOrderStatus(id, "Preparing");
   const handleReject = (id) => updateOrderStatus(id, "Rejected");
-  const handleOutForDelivery = (id) => updateOrderStatus(id, "Out for Delivery");
+  const handleOutForDelivery = (id) =>
+    updateOrderStatus(id, "Out for Delivery");
   const handleDelivered = (id) => updateOrderStatus(id, "Delivered");
 
-  // Badge styles
   const getStatusClass = (status) => {
     switch (status) {
-      case "Order Received": return "badge received blink";
-      case "Preparing": return "badge preparing";
-      case "Out for Delivery": return "badge delivery";
-      case "Delivered": return "badge delivered";
-      case "Rejected": return "badge rejected";
-      case "Cancelled": return "badge cancelled";
-      default: return "badge";
+      case "Order Received":
+        return "badge received blink";
+      case "Preparing":
+        return "badge preparing";
+      case "Out for Delivery":
+        return "badge delivery";
+      case "Delivered":
+        return "badge delivered";
+      case "Rejected":
+        return "badge rejected";
+      case "Cancelled":
+        return "badge cancelled";
+      default:
+        return "badge";
     }
   };
+
+  // Show only orders assigned to current admin
+  const myOrders = orders.filter((o) => o.assignedTo === adminName);
 
   return (
     <div className="admin-panel">
@@ -91,7 +96,7 @@ const AdminPanel = () => {
         </div>
       )}
 
-      {/* Desktop table */}
+      {/* 📋 Orders Table (Removed Assigned Column) */}
       <div className="desktop-table">
         <table>
           <thead>
@@ -100,19 +105,17 @@ const AdminPanel = () => {
               <th>Items</th>
               <th>Total</th>
               <th>Status</th>
-              <th>Assigned</th>
               <th>Mobile</th>
               <th>Actions</th>
             </tr>
           </thead>
           <tbody>
-            {orders.map((o) => (
+            {myOrders.map((o) => (
               <tr key={o.id}>
                 <td>{o.id}</td>
                 <td>{o.items.map((i) => i.title || i).join(", ")}</td>
                 <td>₹{o.total}</td>
                 <td><span className={getStatusClass(o.status)}>{o.status}</span></td>
-                <td>{o.assignedTo || "Unassigned"}</td>
                 <td>{o.mobile}</td>
                 <td>
                   {o.status === "Preparing" && (
@@ -128,15 +131,14 @@ const AdminPanel = () => {
         </table>
       </div>
 
-      {/* Mobile cards */}
+      {/* 📱 Mobile Cards (Removed Assigned Field) */}
       <div className="mobile-cards">
-        {orders.map((o) => (
+        {myOrders.map((o) => (
           <div key={o.id} className="card order-card">
             <p className="order-id">Order #{o.id}</p>
             <p><strong>Items:</strong> {o.items.map((i) => i.title || i).join(", ")}</p>
             <p><strong>Total:</strong> ₹{o.total}</p>
             <p><strong>Status:</strong> <span className={getStatusClass(o.status)}>{o.status}</span></p>
-            <p><strong>Assigned:</strong> {o.assignedTo || "Unassigned"}</p>
             <p><strong>Mobile:</strong> {o.mobile}</p>
             <div className="card-buttons">
               {o.status === "Preparing" && (
