@@ -218,7 +218,66 @@ const PREDEFINED_QA = [
   { question: "Do you provide catering packages?", answer: "Yes, for parties or events." },
   { question: "What are the chef’s specials?", answer: "Today's chef special: Spicy Chicken Tacos." },
   { question: "Do you offer combo packs for meals?", answer: "Yes, main course + drink combo packs available." },
- 
+  { question: "hi", answer: "👋 Hello! Welcome to FusionXCanteen. How can I help you today?" },
+  { question: "hello", answer: "😊 Hi there! I'm your FusionXCanteen AI Assistant." },
+  { question: "hey", answer: "Hey! 🙌 How’s your day going?" },
+  { question: "good morning", answer: "🌞 Good Morning! Ready for some tasty food?" },
+  { question: "good afternoon", answer: "☀️ Good Afternoon! Need a meal or snack?" },
+  { question: "good evening", answer: "🌆 Good Evening! Hungry for dinner or snacks?" },
+  { question: "good night", answer: "🌙 Good Night! We’ll be here for you tomorrow too." },
+
+  // Introduction
+  { question: "who are you", answer: "🤖 I'm FusionXCanteen's AI Bot, here to help with food, drinks, offers, and orders!" },
+  { question: "your introduction", answer: "Hi, I'm FusionXCanteen AI Assistant 🚀. I help you explore menus, track orders, and find offers." },
+  { question: "what is your name", answer: "You can call me FusionBot 🤖!" },
+  { question: "what can you do", answer: "I can help you with 🍕 food menus, 🥤 drinks, 💰 offers, and 🚚 order tracking." },
+
+  // Small Talk
+  { question: "how are you", answer: "I'm doing great, thanks for asking! 🤗 How about you?" },
+  { question: "i am fine", answer: "That’s awesome! Let’s make your day better with food 🍔🍕🥤" },
+  { question: "thank you", answer: "You're welcome! 🙏 Happy to help." },
+  { question: "thanks", answer: "Anytime! 😊 Enjoy your meal." },
+  { question: "bye", answer: "Goodbye 👋 Have a tasty day!" },
+  { question: "goodbye", answer: "See you soon! 🍴 Don’t forget to check our offers." },
+
+  // Menu Queries
+  { question: "show me food", answer: "🍔 Available Food: Burger ₹99, Pizza ₹299, Pasta ₹199." },
+  { question: "show me drinks", answer: "🥤 Available Drinks: Coke ₹49, Lemonade ₹59, Coffee ₹79." },
+  { question: "pizza", answer: "🍕 Pizza Options: Margherita ₹299, Veg ₹349, Chicken ₹399." },
+  { question: "burger", answer: "🍔 Burgers: Veg ₹99, Chicken ₹149, Cheese ₹129." },
+  { question: "pasta", answer: "🍝 Pasta: White Sauce ₹199, Red Sauce ₹219." },
+  { question: "sandwich", answer: "🥪 Sandwiches: Veg ₹79, Grilled ₹99, Club ₹129." },
+  { question: "coffee", answer: "☕ Coffee: Hot ₹79, Cold ₹89, Cappuccino ₹99." },
+  { question: "tea", answer: "🍵 Tea: Masala ₹49, Green Tea ₹59, Lemon Tea ₹69." },
+
+  // Offers
+  { question: "offers", answer: "💰 Today’s Offer: Buy 1 Pizza + 1 Drink Combo only ₹399!" },
+  { question: "discount", answer: "🎉 You can save 20% on orders above ₹500." },
+  { question: "combo", answer: "🍴 Combos: Pizza + Drink ₹399, Burger + Fries ₹149." },
+  { question: "special", answer: "✨ Special this week: Weekend Platter ₹299 only!" },
+
+  // Order Tracking
+  { question: "track order", answer: "🚚 You can track your order in the Tracker section." },
+  { question: "where is my order", answer: "Your order is being prepared 🍳 Please wait a few minutes." },
+  { question: "order status", answer: "📦 Orders go through stages: Received → Preparing → Out for Delivery → Delivered." },
+  { question: "cancel order", answer: "❌ You can cancel an order from the Tracker page before delivery." },
+
+  // User Help
+  { question: "how to login", answer: "👤 Go to Login page and enter your email & password." },
+  { question: "how to signup", answer: "✍️ Use Signup page, fill your details, and start ordering!" },
+  { question: "how to order", answer: "🛒 Add items to your cart and confirm your order with a mobile number." },
+  { question: "how to pay", answer: "💳 Currently, pay on delivery (COD) is available." },
+  { question: "contact", answer: "📞 You can contact the canteen at +91-9876543210." },
+  { question: "help", answer: "I’m here to help! 😊 Ask me about menu, offers, or your order." },
+
+  // Fun Responses
+  { question: "tell me a joke", answer: "😂 Why don’t burgers tell secrets? Because they might spill the beans!" },
+  { question: "are you human", answer: "Haha, no! 🤖 I’m a bot, but I love tasty food too." },
+  { question: "do you eat", answer: "I don’t eat, but I recommend you try our Chicken Burger 🍔😋" },
+  { question: "who made you", answer: "I was created by the FusionXCanteen dev team 👨‍💻." },
+  { question: "best food", answer: "🍕 Pizza is our most loved item. Want me to show options?" },
+  { question: "hungry", answer: "Same here 😅 Let’s grab something delicious from the menu!" },
+  { question: "bored", answer: "How about a snack break? Food always makes things better 🍫🍟." },
   
   { question: "What is the price of sushi?", answer: "Sushi costs ₹250 per serving." },
   { question: "What is the price of pizza?", answer: "Pizza starts at ₹299 depending on type." },
