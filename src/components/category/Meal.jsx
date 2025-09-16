@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./Meal.css"; // same CSS as DrinkGallery
+import "./Meal.css"; // Use the same CSS as AllItemsPage1
 
 const MEAL_ITEMS = [
   { id: 1, title: "Veg Salad", emoji: "🥗", price: "₹120", desc: "Fresh and healthy veg salad." },
@@ -38,12 +38,23 @@ function MealPage({ addToCart }) {
           <div
             key={item.id}
             className="food-card"
-            style={{ "--delay": `${idx * 0.05}s`, cursor: "pointer" }}
+            style={{ "--delay": `${idx * 0.05}s` }}
             onClick={() => openModal(item)}
           >
-            <span style={{ fontSize: "2rem" }}>{item.emoji}</span>
+            <div className="emoji" style={{ fontSize: "2rem" }}>
+              {item.emoji}
+            </div>
             <h3 style={{ fontWeight: "bold", marginTop: "5px" }}>{item.title}</h3>
             <p>{item.price}</p>
+            <button
+              className="add-btn"
+              onClick={(e) => {
+                e.stopPropagation();
+                addToCart(item);
+              }}
+            >
+              Add to Cart
+            </button>
           </div>
         ))}
       </div>
@@ -51,13 +62,21 @@ function MealPage({ addToCart }) {
       {openItem && (
         <div className="modal-backdrop" onClick={closeModal}>
           <div className="modal" onClick={(e) => e.stopPropagation()}>
-            <button className="modal-close" onClick={closeModal}>✕</button>
+            <button className="modal-close" onClick={closeModal}>
+              ✕
+            </button>
             <span style={{ fontSize: "4rem" }}>{openItem.emoji}</span>
             <h3 style={{ fontWeight: "bold" }}>{openItem.title}</h3>
             <p>{openItem.price}</p>
             <p>{openItem.desc}</p>
             <div className="modal-actions">
-              <button className="btn" onClick={() => { addToCart(openItem); closeModal(); }}>
+              <button
+                className="btn"
+                onClick={() => {
+                  addToCart(openItem);
+                  closeModal();
+                }}
+              >
                 Add to Cart
               </button>
               <button className="btn secondary" onClick={closeModal}>
